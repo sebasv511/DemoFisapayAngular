@@ -1,0 +1,71 @@
+<form [formGroup]="form">
+    <div class="container mt-5">
+        <h3 class="left-text">{{accion}} de cliente</h3>
+        <div class="row">
+            <div class="col-4">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="far fa-address-card"
+                        [class.green-icon]="this.form.get('cedula')?.valid"
+                        [class.red-icon]="this.form.get('cedula')?.invalid && this.form.get('cedula')?.touched"></i>
+                    </span>
+                    <input (keypress) = "onlyNumber($event)" formControlName="cedula" type="text" class="form-control left-text" placeholder="Número de cédula"
+                        aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="far fa-user"
+                        [class.green-icon]="this.form.get('nombre')?.valid"
+                        [class.red-icon]="this.form.get('nombre')?.invalid && this.form.get('nombre')?.touched"></i>
+                    </span>
+                    <input formControlName="nombre" type="text" class="form-control left-text" placeholder="Nombre completo"
+                        aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="far fa-calendar-alt"></i>
+                    </span>
+                    <input formControlName="fechaNacimiento" maxlength="10" type="date" class="form-control left-text" placeholder="Fecha de nacimiento (dd/mm/aaaa)"
+                        aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="far fa-money-bill-alt"
+                        [class.green-icon]="this.form.get('salario')?.valid"
+                        [class.red-icon]="this.form.get('salario')?.invalid && this.form.get('salario')?.touched"></i>
+                    </span>
+                    <input (keypress) = "onlyNumber($event)"  formControlName="salario" type="text" class="form-control left-text" placeholder="Salario" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label class="left-text">Género</label>
+                <select formControlName="sexo" class="form-select left-text" aria-label="Default select example">
+                    <option selected></option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <label class="left-text">¿Está vacunado contra el Covid-19?</label>
+                <select formControlName="vacunaCovid" class="form-select left-text" aria-label="Default select example">
+                    <option selected></option>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-2 mt-3">
+            <button [disabled]="this.form.invalid" type="button" class="btn btn-success left-text" (click) = "RegistrarEmpleado()">Guardar</button>
+        </div>
+    </div>
+</form>

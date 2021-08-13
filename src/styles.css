@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+.center-text{    
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+}
+.left-text{
+    font-family: 'Ubuntu', sans-serif;
+    text-align: left;
+}
+.right-text{
+    font-family: 'Ubuntu', sans-serif;
+    text-align: right;
+}
