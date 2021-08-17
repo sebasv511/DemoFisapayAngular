@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-registro-empleado',
@@ -7,21 +8,37 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./registro-empleado.component.css']
 })
 export class RegistroEmpleadoComponent implements OnInit {
-  @Input() accion:string="Creación";
+  @Input() onEdit:boolean=false;  
   @Input() empleado:any |undefined;
   @Output() onRegistrarEmpleado = new EventEmitter<any>();
+  @Output() onEditarEmpleado = new EventEmitter<any>();
+  accion:string="Creación";
 
 
-  RegistrarEmpleado(){
-    const empleado: any = {
-      cedula: this.form.get('cedula')?.value,
-      nombre: this.form.get('nombre')?.value,
-      sexo: this.form.get('sexo')?.value,
-      fechaNacimiento: this.form.get('fechaNacimiento')?.value,
-      salario: this.form.get('salario')?.value,
-      vacunaCovid: this.form.get('vacunaCovid')?.value
-    };
-    this.onRegistrarEmpleado.emit(empleado);
+  RegistrarEmpleado(){    
+    
+    if (this.onEdit){
+      const empleado: any = {
+        id:this.empleado.id,
+        cedula: this.form.get('cedula')?.value,
+        nombre: this.form.get('nombre')?.value,
+        sexo: this.form.get('sexo')?.value,
+        fechaNacimiento: this.form.get('fNacimiento')?.value,
+        salario: this.form.get('salario')?.value,
+        vacunaCovid: this.form.get('vacunaCovid')?.value
+      };
+      this.onEditarEmpleado.emit(empleado);
+    }else{
+      const empleado: any = {        
+        cedula: this.form.get('cedula')?.value,
+        nombre: this.form.get('nombre')?.value,
+        sexo: this.form.get('sexo')?.value,
+        fechaNacimiento: this.form.get('fNacimiento')?.value,
+        salario: this.form.get('salario')?.value,
+        vacunaCovid: this.form.get('vacunaCovid')?.value
+      };
+      this.onRegistrarEmpleado.emit(empleado);
+    }    
     this.form.reset();
   }
 
@@ -31,13 +48,17 @@ export class RegistroEmpleadoComponent implements OnInit {
       cedula: ['', Validators.required],
       nombre: ['', Validators.required],
       sexo: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required, Validators.minLength(10), Validators.maxLength(10)],
+      fNacimiento: ['', Validators.required],
       salario: ['', Validators.required],
       vacunaCovid: ['', Validators.required]
     })
   }
 
   ngOnInit(): void {
+    console.log(this.onEdit)
+    if(this.onEdit){         
+      this.CargarEmpleadoEdit();
+    }
   }
 
   onlyNumber(event:any): boolean {    
@@ -46,5 +67,18 @@ export class RegistroEmpleadoComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  CargarEmpleadoEdit(){
+    const datepipe: DatePipe = new DatePipe('en-US')
+    let formattedDate = datepipe.transform(this.empleado.fechaNacimiento, 'd/MM/YYYY')
+
+    this.accion="Modificación";   
+    this.form.get('cedula')?.setValue(this.empleado.cedula);
+    this.form.get('nombre')?.setValue(this.empleado.nombre);
+    this.form.get('sexo')?.setValue(this.empleado.sexo);
+    this.form.get('fNacimiento')?.setValue(formattedDate);
+    this.form.get('salario')?.setValue(this.empleado.salario);
+    this.form.get('vacunaCovid')?.setValue(this.empleado.vacunaCovid);
   }
 }

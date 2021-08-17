@@ -7,11 +7,12 @@
     <div class="col-2">
 
     </div>
-    <app-listado-empleados [listEmpleados]="listEmpleados" [totalSalarios]="totalSalarios"
+    <app-listado-empleados [listEmpleados]="listEmpleados"
         (onEliminarEmpleado)="EliminarEmpleado($event)" (onEditarEmpleado)="EditarEmpleado($event)"
-        (onActualizarEmpleado)="ActualizarEmpleado($event)" *ngIf="displayLista">
+        (onActualizarEmpleado)="ActualizarEmpleado($event)" (onFiltrarEmpleado) = "ObtenerEmpleados($event)"
+        *ngIf="displayLista">
     </app-listado-empleados>
     <div id="comp-render" *ngIf="displayEmpleado">
-        <app-registro-empleado [empleado]="empleadoEdit" (onRegistrarEmpleado)="GetEmpleado($event)"></app-registro-empleado>
+        <app-registro-empleado [onEdit]="onEdit" [empleado]="empleadoEdit" (onRegistrarEmpleado)="GetEmpleado($event)" (onEditarEmpleado)="ActualizarEmpleado($event)"></app-registro-empleado>
     </div>
 </div>

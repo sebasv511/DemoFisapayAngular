@@ -10,8 +10,8 @@ export class EmpleadoService {
   private apiUrl = 'api/empleado/'
 
   constructor(private http:HttpClient) { }
-  getEmpleados():Observable<any> {
-    return this.http.get(this.appUrl + this.apiUrl);
+  getEmpleados(filtro:string):Observable<any> {
+    return this.http.get(this.appUrl + this.apiUrl + filtro);
   }
   saveEmpleado(empleado:any):Observable<any>{
     console.log(empleado);
